@@ -14,11 +14,12 @@ app.get('/showscore',(req,res) => {
     mysql.createConnection({
         host: 'localhost',
         user: 'root',
-        password: 'password',
-        database: 'Karma'
+        password: 'karma',
+        database: 'Karma',
+        port: '5000'
     }).then((data) => {
         data
-        .query('SELECT * FROM')
+        .query('SELECT * FROM students')
         .then((results) => {
             res.json(results[0])
     })
