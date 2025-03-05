@@ -5,17 +5,31 @@
     box-sizing: border-box;
     font-family: Arial, sans-serif;
 }
+body{
+    position: fixed;
+    top: 0;
+    left: 0;
+    
 
+
+}
+.main{
+    display: flex;
+    gap: 2rem;
+
+}
 /* ตั้งค่าพื้นหลังและการจัดวาง */
 .container {
     display: flex;
+    justify-content: space-between;
+    gap: 10rem;
     height: 100vh;
 }
 
 /* สไตล์ของ Sidebar */
 .sidebar {
-    width: 50%;
-    background-color: #0a2850;
+    width: 800px;
+    background-color: #08203e;
     display: flex;
     align-items: center;
     justify-content: center;
