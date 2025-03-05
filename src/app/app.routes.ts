@@ -5,5 +5,5 @@ import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {path:'table',component:DataTableComponent},
-    {path:'login',component:LoginComponent}
+    {path:'login',component:LoginComponent},
 ];
