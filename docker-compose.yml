@@ -22,3 +22,9 @@ services:
       - "8080:80"
     depends_on:
       - db
+  
+  Backend:
+    dockerfile : Dockerfile
+    container_name: Backend-services
+    environment:
+      - DATABASE_URL=mysql://root:karma@db:3306
