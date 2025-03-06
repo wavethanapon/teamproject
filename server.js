@@ -2,12 +2,16 @@ const express  = require('express')
 const bodyparser  = require('body-parser')
 const mysql = require('mysql2/promise')
 const path = require('path')
+const cors = require('cors');
 const app = express()
 app.use(express.json());
 const {google} = require("googleapis")
 const axios = require("axios");
 const port = 8000
 
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
 
 app.get('/hello_world',(req,res) => {
     res.send('hello world')
