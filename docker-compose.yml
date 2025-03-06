@@ -11,7 +11,7 @@ services:
       - "5000:3306"
     volumes:
       - ./BackupDB.sql:/docker-entrypoint-initdb.d/BackupDB.sql
-      - ./data:/var/lib/mysql
+      - data:/var/lib/mysql
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -29,3 +29,8 @@ services:
   #   container_name: Backend-services
   #   environment:
   #     - DATABASE_URL=mysql://root:karma@db:3306
+
+volumes:
+  data :
+    driver : local
+  

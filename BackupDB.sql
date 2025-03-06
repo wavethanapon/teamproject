@@ -222,7 +222,7 @@ INSERT INTO `students` (`student_id`, `email`, `years`, `title`, `full_name`, `n
 (65200271, '65200271@kmitl.ac.th', 3, 'นาย', 'ภูฤทธิ์ ไชยยางพานิช', 'ภู', '2004-03-14', 'ชาย', '0936471399', '$2a$12$16kcx9wSJOFDJO39o25zsOqzIUuGloFAY8bOdthK1kx9Os1lbTwr6'),
 (65200272, '65200272@kmitl.ac.th', 3, 'นางสาว', 'ภูวณิดา เรืองด้วง', '', '0000-00-00', 'หญิง', '', '$2a$12$gPCt9akgT0hq7/2./AMEietNfKu9OTVT3wL4XqLdVJHEr7yiOca32'),
 (65200273, '65200273@kmitl.ac.th', 3, 'นาย', 'ภูวดล สมบัติมาก', '', '0000-00-00', 'ชาย', '', '$2a$12$iIuD8FRy9B45cw5l0ztrSeC.teR6K9qi9h9F4/08MrXYgW9sG89DG'),
-(65200275, '65200265@kmitl.ac.th', 3, 'นาย', 'ภูวิศร ทองตะโก', 'ไบค์', '2004-03-18', 'ชาย', '0957789986', '$2a$12$31DHNF4GcEytq9vG0LVIMuiz3K6VawrACkowbMvudSkE/1d9x15J2'),
+(65200275, '65200275@kmitl.ac.th', 3, 'นาย', 'ภูวิศร ทองตะโก', 'ไบค์', '2004-03-18', 'ชาย', '0957789986', '$2a$12$31DHNF4GcEytq9vG0LVIMuiz3K6VawrACkowbMvudSkE/1d9x15J2'),
 (65200276, 'phusitlapet@gmail.com', 3, 'นาย', 'ภูสิทธิ์ หล้าเพชร', 'ภูมิ', '2003-09-24', 'ชาย', '', '$2a$12$Ccb7PoALZwHdNayIWmbZJ.KM/bwE4ZTycyZ4hvX./mr7Fq5HqEAMm'),
 (65200277, '65200277@kmitl.ac.th', 3, 'นาย', 'มูฮัยมิน มามะ', 'มิน', '2004-03-14', 'ชาย', '0828144748', '$2a$12$oJ8Wapt7H6pJQcDC5kBuTuDYigJSLQCb97pI2i2mPT796MTjhbXd.'),
 (65200279, '65200279@kmitl.ac.th', 3, 'นาย', 'ยงศักดิ์ แสงสุข', 'นีโอ', '2004-01-24', 'ชาย', '0952909471', '$2a$12$9s08t1wmYN.FHBtaaGT0mu6B5Fo7KqAZx6JUW5bNd0pscZq5OsKE.'),
@@ -623,6 +623,30 @@ INSERT INTO `student_points` (`student_id`, `total_points`) VALUES
 (67200452, 0),
 (67200460, 0);
 
+
+-- --------------------------------------------------------
+--
+-- Table structure for table `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `teachers_id` int NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `title` varchar(30) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`teachers_id`, `email`, `title`, `full_name`, `password`) VALUES
+(1, 'athasart.na@kmitl.ac.th', 'อาจารย์', 'อรรถศาสตร์ นาตเทวัญ', '$2a$12$vTgc9gHDGgAvbY3.Aq6sy.MEipoc57/Hn5eQ7M65PF5KW4UgoOrcG'),
+(2, 'jaturong.ka@kmitl.ac.th', 'นาย', 'จตุรงค์ เกตุนิมิต', '$2a$12$m7Fifz2LT28JWOzJES8J2OIovrRH9gaFYQxy.y5IaETnjKfqpJ9xu'),
+(3, 'pisakorn.si@kmitl.ac.th', 'อาจารย์', 'นภัทรพี สิทธิวัจน', '$2a$12$f4EQeoTWOUY6Y.rh3usQgu/MKpGly64Kg0MdH8Ay4Jhf6Absocz3q'),
+(4, 'rattikorn.so@kmitl.ac.th', 'อาจารย์', 'รัตติกร สมบัติเเก้ว', '$2a$12$/2Hk36oxqK2wGw0HnQMgGu7FnjPIPQSykLuiLEfONiGDFiPbX7lSq'),
+(5, 'silar.si@kmitl.ac.th', 'ว่าที่ ร.ต.', 'ศิลา ศิริมาสกุล', '$2a$12$FT9E33UicrXLWRUwl8FaDOwJsbwNGjWaorIm81c1TqYCTqqHt7.dq');
 
 -- --------------------------------------------------------
 

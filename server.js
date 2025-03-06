@@ -3,7 +3,7 @@ const bodyparser  = require('body-parser')
 const mysql = require('mysql2/promise')
 const path = require('path')
 const app = express()
-
+app.use(express.json());
 const port = 8000
 
 
@@ -11,7 +11,8 @@ app.get('/hello_world',(req,res) => {
     res.send('hello world')
 })
 
-app.get('/login', async (req,res) => {
+
+app.post('/login', async (req, res) => {
     try {
         const data = await mysql.createConnection({
             host: 'localhost',
@@ -20,10 +21,21 @@ app.get('/login', async (req,res) => {
             database: 'Karma',
             port: '5000'
         })
-        const results = await data.query('SELECT email, passwords FROM students')
+        const { email } = req.body; // Extract email from request body
+        if (!email) {
+            return res.status(400).json({ error: "Email is required" })
+        }
+
+        const sql = 'SELECT email, passwords FROM students WHERE email = ?'
+        const [results] = await data.query(sql, [email]);
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: "User not found" })
+        }
+
         res.json(results[0])
-    }   catch (error) {
-        console.error('Error fetching users:', error.message)
+    } catch (error) {
+        console.error('Error fetching users:', error.message);
         res.status(500).json({ error: 'Error fetching users' })
     }
 })
@@ -58,6 +70,34 @@ app.get('/showscorefull',async (req,res) => {
         res.json(results[0])
     }   catch (error) {
         console.error('Error fetching users:', error.message)
+        res.status(500).json({ error: 'Error fetching users' })
+    }
+})
+
+app.post('/loginadmin', async (req, res) => {
+    try {
+        const data = await mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: 'karma',
+            database: 'Karma',
+            port: '5000'
+        })
+        const { email } = req.body; // Extract email from request body
+        if (!email) {
+            return res.status(400).json({ error: "Email is required" })
+        }
+
+        const sql = 'SELECT email, password FROM teachers WHERE email = ?'
+        const [results] = await data.query(sql, [email]);
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: "User not found" })
+        }
+
+        res.json(results[0])
+    } catch (error) {
+        console.error('Error fetching users:', error.message);
         res.status(500).json({ error: 'Error fetching users' })
     }
 })
