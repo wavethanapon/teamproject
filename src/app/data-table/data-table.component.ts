@@ -15,7 +15,7 @@ export class DataTableComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:8000/showscorefull')
+    this.http.get<any[]>('  http://localhost:8000/showscorefull')
       .subscribe((data) => {
         this.tableData = data; // ✅ อัปเดตข้อมูลเข้า tableData
       });
