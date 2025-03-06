@@ -5,7 +5,7 @@ const path = require('path')
 const app = express()
 app.use(express.json());
 const {google} = require("googleapis")
-
+const axios = require("axios");
 const port = 8000
 
 
@@ -105,7 +105,7 @@ app.post('/loginadmin', async (req, res) => {
 })
 
 // api google
-app.get("/", async (req, res) => {
+app.get("/form", async (req, res) => {
     try {
         const auth = new google.auth.GoogleAuth({
             keyFile: "credential.json",
@@ -119,29 +119,58 @@ app.get("/", async (req, res) => {
         const getRows = await googlesheet.spreadsheets.values.get({
             auth,
             spreadsheetId,
-            range: "Form Responses 1!A:F",
+            range: "Form Responses 1!D:F",
         });
+
 
         const rows = getRows.data.values;
         if (!rows || rows.length < 2) {
             return res.json([]); // Return empty array if there's no data
         }
 
-        const headers = rows[0]; // First row as headers
+        // Assuming columns D, E, F are mapped to 'Student ID', 'ประเภทกิจกรรม', and 'ชื่อกิจกรรม'
         const data = rows.slice(1).map(row => {
-            return headers.reduce((obj, header, index) => {
-                obj[header] = row[index] || ""; // Assign values to headers
-                return obj;
-            }, {});
+            return {
+                "Student ID": row[0] || "",  
+                "ประเภทกิจกรรม": row[1] || "",  
+                "ชื่อกิจกรรม": row[2] || ""  
+            };
         });
 
-        res.json(data); // Return transformed data as JSON
+        res.json(data); 
+
     } catch (error) {
         console.error(error);
         res.status(500).send("Error fetching data from Google Sheets");
     }
 });
 
+
+app.post("/save", async (req, res) => {
+    const data = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: 'karma',
+        database: 'Karma',
+        port: '5000'
+    })
+    const { student_id, activity_type_id, activity_name } = req.body;
+    
+    if (!student_id || !activity_type_id || !activity_name) {
+        return res.status(400).json({ error: "Missing required fields" });
+    }
+    
+    const sql = "INSERT INTO participation (student_id, activity_type_id, activity_name) VALUES (?, ?, ?)";
+    const values = [student_id, activity_type_id, activity_name];
+    
+    data.query(sql, values, (err, result) => {
+        if (err) {
+            console.error("Error inserting data:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
+        res.json({ message: "Data inserted successfully", id: result.insertId });
+    });
+});
 
 app.listen(port, (req, res) =>{
     console.log('http server run at '+ port)
