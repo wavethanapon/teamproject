@@ -10,15 +10,27 @@ services:
     ports:
       - "5000:3306"
     volumes:
-      - ./data:/var/lib/mysql
+      - ./BackupDB.sql:/docker-entrypoint-initdb.d/BackupDB.sql
+      - data:/var/lib/mysql
   
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: phpmyadmin
     environment:
-      PMA_HOST: db        # ระบุ host ที่จะให้ phpmyadmin ไปจัดการ ซึ่งสามารถใส่เป็นชื่อ container name (db) ได้เลย
-      PMA_PORT: 3306      # ระบุ port ของ Database
+      PMA_HOST: db        
+      PMA_PORT: 3306      
     ports:
       - "8080:80"
     depends_on:
       - db
+  
+  # Backend:
+  #   dockerfile : Dockerfile
+  #   container_name: Backend-services
+  #   environment:
+  #     - DATABASE_URL=mysql://root:karma@db:3306
+
+volumes:
+  data :
+    driver : local
+  
