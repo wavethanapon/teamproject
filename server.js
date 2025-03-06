@@ -4,6 +4,8 @@ const mysql = require('mysql2/promise')
 const path = require('path')
 const app = express()
 app.use(express.json());
+const {google} = require("googleapis")
+
 const port = 8000
 
 
@@ -103,7 +105,42 @@ app.post('/loginadmin', async (req, res) => {
 })
 
 // api google
+app.get("/", async (req, res) => {
+    try {
+        const auth = new google.auth.GoogleAuth({
+            keyFile: "credential.json",
+            scopes: "https://www.googleapis.com/auth/spreadsheets",
+        });
 
+        const client = await auth.getClient();
+        const googlesheet = google.sheets({ version: "v4", auth: client });
+        const spreadsheetId = "1rAc0wxCOTY4wIYaO6Ch8nR1rveQUWSms4WGNN2c-wGw";
+
+        const getRows = await googlesheet.spreadsheets.values.get({
+            auth,
+            spreadsheetId,
+            range: "Form Responses 1!A:F",
+        });
+
+        const rows = getRows.data.values;
+        if (!rows || rows.length < 2) {
+            return res.json([]); // Return empty array if there's no data
+        }
+
+        const headers = rows[0]; // First row as headers
+        const data = rows.slice(1).map(row => {
+            return headers.reduce((obj, header, index) => {
+                obj[header] = row[index] || ""; // Assign values to headers
+                return obj;
+            }, {});
+        });
+
+        res.json(data); // Return transformed data as JSON
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error fetching data from Google Sheets");
+    }
+});
 
 
 app.listen(port, (req, res) =>{
