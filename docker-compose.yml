@@ -24,11 +24,17 @@ services:
     depends_on:
       - db
   
-  # Backend:
-  #   dockerfile : Dockerfile
-  #   container_name: Backend-services
-  #   environment:
-  #     - DATABASE_URL=mysql://root:karma@db:3306
+  backend:
+    build: .
+    container_name: karma-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
 
 volumes:
   data :
