@@ -21,11 +21,11 @@ app.get('/hello_world',(req,res) => {
 app.post('/login', async (req, res) => {
     try {
         const data = await mysql.createConnection({
-            host: 'localhost',
+            host: 'db',
             user: 'root',
             password: 'karma',
             database: 'Karma',
-            port: '5000'
+            port: '3306'
         })
         const { email } = req.body; // Extract email from request body
         if (!email) {
@@ -49,11 +49,11 @@ app.post('/login', async (req, res) => {
 app.get('/showscore', async (req,res) => {
     try {
         const data = await mysql.createConnection({
-            host: 'localhost',
+            host: 'db',
             user: 'root',
             password: 'karma',
             database: 'Karma',
-            port: '5000'
+            port: '3306'
         })
         const results = await data.query('SELECT students.student_id,full_name ,total_points FROM students JOIN student_points ON students.student_id = student_points.student_id;')
         res.json(results[0])
@@ -66,11 +66,11 @@ app.get('/showscore', async (req,res) => {
 app.get('/showscorefull',async (req,res) => {
     try {
         const data = await mysql.createConnection({
-            host: 'localhost',
+            host: 'db',
             user: 'root',
             password: 'karma',
             database: 'Karma',
-            port: '5000'
+            port: '3306'
         })
         const results = await data.query('SELECT s.student_id, full_name, nickname, year_name, email, phone, total_points FROM students AS s JOIN student_points AS sp ON s.student_id = sp.student_id JOIN years AS y ON y.id = s.years ORDER BY s.student_id;')
         res.json(results[0])
@@ -83,11 +83,11 @@ app.get('/showscorefull',async (req,res) => {
 app.post('/loginadmin', async (req, res) => {
     try {
         const data = await mysql.createConnection({
-            host: 'localhost',
+            host: 'db',
             user: 'root',
             password: 'karma',
             database: 'Karma',
-            port: '5000'
+            port: '3306'
         })
         const { email } = req.body; // Extract email from request body
         if (!email) {
@@ -152,11 +152,11 @@ app.get("/form", async (req, res) => {
 
 app.post("/save", async (req, res) => {
     const data = await mysql.createConnection({
-        host: 'localhost',
+        host: 'db',
         user: 'root',
         password: 'karma',
         database: 'Karma',
-        port: '5000'
+        port: '3306'
     })
     const { student_id, activity_type_id, activity_name } = req.body;
     
